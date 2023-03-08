@@ -1,19 +1,10 @@
-![Build Status](https://github.com/DiscipleTools/disciple-tools-plugin-starter-template/actions/workflows/ci.yml/badge.svg?branch=master)
-## Dev notes, delete me:
-This is a starter plugin to jumpstart your work with Disciple.Tools.
-Click the "Use this template" button above.
-See instructions for refactoring and getting started in the [wiki](https://github.com/DiscipleTools/disciple-tools-plugin-starter-template/wiki)
-See instructions for creating releases and publishing your plugin: [wiki](https://github.com/DiscipleTools/disciple-tools-plugin-starter-template/wiki)
-In order to display the banner correctly on the Disciple.Tools Community Plugins Site, don't change the 'Plugin Banner' text on line 12; only the URL.
+![Build Status](https://github.com/cairocoder01/disciple-tools-setup-wizard/actions/workflows/ci.yml/badge.svg?branch=master)
 
-## readme format:
+![Plugin Banner](https://github.com/cairocoder01/dt-setup-wizard/raw/master/documentation/banner.png)
 
-![Plugin Banner](https://raw.githubusercontent.com/DiscipleTools/disciple-tools-plugin-starter-template/b30402d97895e3f911efcb47fb8f29ccd1eb92e5/documentation/banner.png)
+# Disciple.Tools - Setup Wizard
 
-# Disciple.Tools - Plugin Starter Template
-
-Description Description Description Description Description Description Description
-Description Description Description Description Description Description Description
+Kickstart your Disciple.Tools new site setup with a streamlined setup wizard
 
 ## Purpose
 
@@ -27,14 +18,11 @@ Purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose 
 
 #### Will Do
 
-- Item
-- Item
-- Item
+- Takes a JSON site configuration and automates install of plugins, adding users, and setting WP options
 
 #### Will Not Do
 
-- Item
-- Item
+- Friendly wizard UI for non-technical users (future feature)
 
 ## Requirements
 
@@ -48,11 +36,11 @@ Purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose 
 ## Contribution
 
 Contributions welcome. You can report issues and bugs in the
-[Issues](https://github.com/DiscipleTools/disciple-tools-plugin-starter-template/issues) section of the repo. You can present ideas
-in the [Discussions](https://github.com/DiscipleTools/disciple-tools-plugin-starter-template/discussions) section of the repo. And
-code contributions are welcome using the [Pull Request](https://github.com/DiscipleTools/disciple-tools-plugin-starter-template/pulls)
+[Issues](https://github.com/cairocoder01/disciple-tools-setup-wizard/issues) section of the repo. You can present ideas
+in the [Discussions](https://github.com/cairocoder01/disciple-tools-setup-wizard/discussions) section of the repo. And
+code contributions are welcome using the [Pull Request](https://github.com/cairocoder01/disciple-tools-setup-wizard/pulls)
 system for git. For a more details on contribution see the
-[contribution guidelines](https://github.com/DiscipleTools/disciple-tools-plugin-starter-template/blob/master/CONTRIBUTING.md).
+[contribution guidelines](https://github.com/cairocoder01/disciple-tools-setup-wizard/blob/master/CONTRIBUTING.md).
 
 
 ## Screenshots
