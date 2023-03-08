@@ -37,7 +37,12 @@ class Disciple_Tools_Setup_Wizard_Menu {
 
         add_action( 'admin_menu', array( $this, 'register_menu' ) );
 
+        $this->process_scripts();
+
         $this->page_title = __( 'Setup Wizard', 'disciple-tools-setup-wizard' );
+
+        require_once( 'admin-actions.php' ); // adds ajax action handler
+
     } // End __construct()
 
 
@@ -56,6 +61,18 @@ class Disciple_Tools_Setup_Wizard_Menu {
      */
     public function extensions_menu() {}
 
+    private function process_scripts() {
+        wp_enqueue_script( 'dt_setup_wizard_script', plugin_dir_url( __FILE__ ) . 'js/wizard.js', [
+            // 'jquery',
+            'lodash'
+        ], filemtime( dirname( __FILE__ ) . '/js/wizard.js' ), true );
+
+        wp_localize_script(
+            "dt_magic_links_general_script", "dt_magic_links", array(
+                'dt_xyz' => ''
+            )
+        );
+    }
     /**
      * Builds page contents
      * @since 0.1
@@ -77,6 +94,7 @@ class Disciple_Tools_Setup_Wizard_Menu {
         ?>
         <div class="wrap">
             <h2><?php echo esc_html( $this->page_title ) ?></h2>
+            <?php wp_nonce_field( 'security_headers', 'security_headers_nonce' ); ?>
             <h2 class="nav-tab-wrapper">
                 <a href="<?php echo esc_attr( $link ) . 'general' ?>"
                    class="nav-tab <?php echo esc_html( ( $tab == 'general' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">General</a>
@@ -148,7 +166,17 @@ class Disciple_Tools_Setup_Wizard_Tab_General {
             <tbody>
                 <tr>
                     <td>
-                        Content
+                        <form name="advancedConfig" onsubmit="advancedConfigSubmit(event)">
+                            <textarea name="config"></textarea>
+
+                            <button type="submit">Submit</button>
+                        </form>
+                        <script>
+                            // var form = document.forms['advancedConfig'];
+                            // if (form) {
+                            //     form.addEventListener("submit", advancedConfigSubmit);
+                            // }
+                        </script>
                     </td>
                 </tr>
             </tbody>
@@ -159,6 +187,12 @@ class Disciple_Tools_Setup_Wizard_Tab_General {
     }
 
     public function right_column() {
+        $sample = [
+            "plugins" => [
+                "https://github.com/DiscipleTools/disciple-tools-webform/releases/latest/download/disciple-tools-webform.zip",
+                "https://github.com/DiscipleTools/disciple-tools-mobile-app-plugin/releases/latest/download/disciple-tools-mobile-app-plugin.zip"
+            ]
+        ];
         ?>
         <!-- Box -->
         <table class="widefat striped">
@@ -170,7 +204,7 @@ class Disciple_Tools_Setup_Wizard_Tab_General {
             <tbody>
             <tr>
                 <td>
-                    Content
+                    <pre><code><?php echo json_encode($sample, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) ?></code></pre>
                 </td>
             </tr>
             </tbody>

@@ -57,7 +57,7 @@ function disciple_tools_setup_wizard() {
     return Disciple_Tools_Setup_Wizard::instance();
 
 }
-add_action( 'after_setup_theme', 'disciple_tools-setup-wizard', 20 );
+add_action( 'after_setup_theme', 'disciple_tools_setup_wizard', 20 );
 
 //register the D.T Plugin
 add_filter( 'dt_plugins', function ( $plugins ){
