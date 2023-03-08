@@ -1,0 +1,64 @@
+.tab-advanced label {
+    display: block;
+    font-weight: 600;
+}
+
+.tab-advanced textarea[name=config] {
+    display: block;
+    width: 100%;
+    min-height: 10rem;
+    white-space: nowrap;
+}
+
+/* ==== Status messages ==== */
+ul.messages {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    padding: 1rem;
+}
+ul.messages li {
+    padding: 0.5rem;
+    background-color: #0dcaf0;
+    border-style: none;
+    border-width: 1px;
+    transition: all 0.5s ease;
+    transform: translateX(10px);
+    opacity: 0;
+    visibility: hidden;
+    /*display: none;*/
+    animation-name: message;
+    /*animation-delay: 5s;*/
+    animation-duration: 6s;
+    /*animation-fill-mode: forwards;*/
+}
+ul.messages li.show {
+    transform:none;
+    opacity: 1;
+}
+
+ul.messages li.error {
+    background-color: #dc3545;
+    color: white;
+}
+
+ul.messages li.success {
+    background-color: #198754;
+    color: white;
+}
+
+@keyframes disappear {
+    0%   {opacity: 1;}
+    99%  {opacity: 0;}
+    100% {opacity: 0; display: none; visibility: hidden;}
+}
+@keyframes message {
+    0% {opacity: 0; visibility: visible; transform: translateX(10px);}
+    10% {opacity: 1;  visibility: visible; transform: none;}
+    90% {opacity: 1; visibility: visible; transform: none;}
+    99% {opacity:0; visibility: visible; transform: none;}
+    100% {opacity:0; visibility: hidden;}
+}

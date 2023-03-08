@@ -38,10 +38,12 @@ class Disciple_Tools_Setup_Wizard_Menu {
         add_action( 'admin_menu', array( $this, 'register_menu' ) );
 
         $this->process_scripts();
+        $this->process_styles();
 
         $this->page_title = __( 'Setup Wizard', 'disciple-tools-setup-wizard' );
 
         require_once( 'admin-actions.php' ); // adds ajax action handler
+        require_once( 'tabs/advanced-config.php' );
 
     } // End __construct()
 
@@ -73,6 +75,11 @@ class Disciple_Tools_Setup_Wizard_Menu {
             )
         );
     }
+
+    private function process_styles() {
+        wp_enqueue_style( 'dt_setup_wizard_css', plugin_dir_url( __FILE__ ) . 'css/wizard.css', false,
+            filemtime( dirname( __FILE__ ) . '/css/wizard.css' ) );
+    }
     /**
      * Builds page contents
      * @since 0.1
@@ -96,15 +103,15 @@ class Disciple_Tools_Setup_Wizard_Menu {
             <h2><?php echo esc_html( $this->page_title ) ?></h2>
             <?php wp_nonce_field( 'security_headers', 'security_headers_nonce' ); ?>
             <h2 class="nav-tab-wrapper">
-                <a href="<?php echo esc_attr( $link ) . 'general' ?>"
-                   class="nav-tab <?php echo esc_html( ( $tab == 'general' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">General</a>
-                <a href="<?php echo esc_attr( $link ) . 'second' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'second' ) ? 'nav-tab-active' : '' ); ?>">Second</a>
+                <a href="<?php echo esc_attr( $link ) . 'advanced' ?>"
+                   class="nav-tab <?php echo esc_html( ( $tab == 'advanced' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">Advanced</a>
+<?php /*                <a href="<?php echo esc_attr( $link ) . 'second' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'second' ) ? 'nav-tab-active' : '' ); ?>">Second</a> */ ?>
             </h2>
 
             <?php
             switch ( $tab ) {
                 case 'general':
-                    $object = new Disciple_Tools_Setup_Wizard_Tab_General();
+                    $object = new Disciple_Tools_Setup_Wizard_Tab_Advanced();
                     $object->content();
                     break;
                 case 'second':
@@ -118,103 +125,16 @@ class Disciple_Tools_Setup_Wizard_Menu {
 
         </div><!-- End wrap -->
 
+        <ul class="messages" id="message-container">
+<!--            <li>Installing plugin</li>-->
+<!--            <li class="success">Plugin installed</li>-->
+<!--            <li class="success">Plugin activated: https://github.com/DiscipleTools/disciple-tools-mobile-app-plugin/releases/latest/download/disciple-tools-mobile-app-plugin.zip</li>-->
+<!--            <li class="error">Failed to install plugin</li>-->
+        </ul>
         <?php
     }
 }
 Disciple_Tools_Setup_Wizard_Menu::instance();
-
-/**
- * Class Disciple_Tools_Setup_Wizard_Tab_General
- */
-class Disciple_Tools_Setup_Wizard_Tab_General {
-    public function content() {
-        ?>
-        <div class="wrap">
-            <div id="poststuff">
-                <div id="post-body" class="metabox-holder columns-2">
-                    <div id="post-body-content">
-                        <!-- Main Column -->
-
-                        <?php $this->main_column() ?>
-
-                        <!-- End Main Column -->
-                    </div><!-- end post-body-content -->
-                    <div id="postbox-container-1" class="postbox-container">
-                        <!-- Right Column -->
-
-                        <?php $this->right_column() ?>
-
-                        <!-- End Right Column -->
-                    </div><!-- postbox-container 1 -->
-                    <div id="postbox-container-2" class="postbox-container">
-                    </div><!-- postbox-container 2 -->
-                </div><!-- post-body meta box container -->
-            </div><!--poststuff end -->
-        </div><!-- wrap end -->
-        <?php
-    }
-
-    public function main_column() {
-        ?>
-        <!-- Box -->
-        <table class="widefat striped">
-            <thead>
-                <tr>
-                    <th>Header</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <form name="advancedConfig" onsubmit="advancedConfigSubmit(event)">
-                            <textarea name="config"></textarea>
-
-                            <button type="submit">Submit</button>
-                        </form>
-                        <script>
-                            // var form = document.forms['advancedConfig'];
-                            // if (form) {
-                            //     form.addEventListener("submit", advancedConfigSubmit);
-                            // }
-                        </script>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <br>
-        <!-- End Box -->
-        <?php
-    }
-
-    public function right_column() {
-        $sample = [
-            "plugins" => [
-                "https://github.com/DiscipleTools/disciple-tools-webform/releases/latest/download/disciple-tools-webform.zip",
-                "https://github.com/DiscipleTools/disciple-tools-mobile-app-plugin/releases/latest/download/disciple-tools-mobile-app-plugin.zip"
-            ]
-        ];
-        ?>
-        <!-- Box -->
-        <table class="widefat striped">
-            <thead>
-                <tr>
-                    <th>Information</th>
-                </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                    <pre><code><?php echo json_encode($sample, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) ?></code></pre>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <br>
-        <!-- End Box -->
-        <?php
-    }
-}
-
 
 /**
  * Class Disciple_Tools_Setup_Wizard_Tab_Second

@@ -14,32 +14,40 @@ function sendAjaxRequest(key, value) {
 
 function install(plug) {
   console.log('installing: ' + plug);
+  showMessage(`Installing: ${plug}`);
   sendAjaxRequest('plugin:install', plug)
     .then((data) => {
       if (!data || !data.success) {
         console.error('Error installing plugin.', data);
+        showMessage(`Error installing plugin ${plug}`, 'error');
       } else if (data.slug) {
         console.log('Successfully installed ' + data.slug);
+        showMessage(`Installed ${plug}`, 'success');
         activate(`${data.slug}/${data.slug}.php`);
       }
     })
     .catch((error) => {
       console.error('Error installing plugin.', error);
+      showMessage(`Error installing plugin ${plug}`, 'error');
     });
 }
 
 function activate(plug) {
   console.log('activating: ' + plug);
+  showMessage(`Activating: ${plug}`);
   sendAjaxRequest('plugin:activate', plug)
     .then((data) => {
       if (!data || !data.success) {
         console.error('Error activated plugin.', data);
+        showMessage(`Error activated plugin ${plug}`, 'error');
       } else {
         console.log('Successfully activated ' + plug);
+        showMessage(`Activated ${plug}`, 'success');
       }
     })
     .catch((error) => {
       console.error('Error activating plugin.', error);
+      showMessage(`Error activated plugin ${plug}`, 'error');
     });
 }
 
@@ -51,6 +59,8 @@ function advancedConfigSubmit(evt) {
     const configRaw = formData.get('config');
     if (!configRaw) {
       console.error('Config value is required');
+      showMessage('Config value is required', 'error');
+      return;
     }
 
     try {
@@ -60,6 +70,7 @@ function advancedConfigSubmit(evt) {
       processConfig(config);
     } catch (error) {
       console.error(error);
+      showMessage('Could not parse config JSON', 'error');
     }
     // console.log('submitting', formData);
     // install('https://github.com/DiscipleTools/disciple-tools-webform/releases/latest/download/disciple-tools-webform.zip');
@@ -75,4 +86,18 @@ function processConfig(config) {
       install(plugin);
     }
   }
+}
+
+function showMessage(content, context) {
+  const container = document.getElementById('message-container');
+  const message = document.createElement('li');
+  message.innerHTML = content;
+  if (context) {
+    message.classList.add(context);
+  }
+  container.append(message);
+
+  setTimeout(function () {
+    message.remove();
+  }, 6500);
 }
