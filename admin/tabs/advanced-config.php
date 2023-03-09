@@ -6,8 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
  */
 class Disciple_Tools_Setup_Wizard_Tab_Advanced
 {
-    public function content()
-    {
+    public function content() {
         ?>
         <div class="wrap tab-advanced">
           <div id="poststuff">
@@ -34,8 +33,7 @@ class Disciple_Tools_Setup_Wizard_Tab_Advanced
         <?php
     }
 
-    public function main_column()
-    {
+    public function main_column() {
         ?>
         <!-- Box -->
         <table class="widefat striped">
@@ -62,39 +60,38 @@ class Disciple_Tools_Setup_Wizard_Tab_Advanced
         <?php
     }
 
-    public function right_column()
-    {
+    public function right_column() {
         $sample = [
-            "plugins" => [
-                "https://github.com/DiscipleTools/disciple-tools-webform/releases/latest/download/disciple-tools-webform.zip",
-                "https://github.com/DiscipleTools/disciple-tools-mobile-app-plugin/releases/latest/download/disciple-tools-mobile-app-plugin.zip"
+            'plugins' => [
+                'https://github.com/DiscipleTools/disciple-tools-webform/releases/latest/download/disciple-tools-webform.zip',
+                'https://github.com/DiscipleTools/disciple-tools-mobile-app-plugin/releases/latest/download/disciple-tools-mobile-app-plugin.zip'
             ],
-            "users" => [
+            'users' => [
                 [
-                    "username" => "testuser",
-                    "email" => "test@test.com",
-                    "roles" => [
-                        "multiplier",
-                        "partner"
+                    'username' => 'testuser',
+                    'email' => 'test@test.com',
+                    'roles' => [
+                        'multiplier',
+                        'partner'
                     ],
-                    "displayName" => "John Doe"
+                    'displayName' => 'John Doe'
                 ]
             ],
-            "options" => [
+            'options' => [
                 [
-                    "key" => "blogname",
-                    "value" => "My DT site"
+                    'key' => 'blogname',
+                    'value' => 'My DT site'
                 ],
                 [
-                    "key" => "dt_field_customizations",
-                    "value" => [
-                        "contacts" => [
-                            "coached_by" => [
-                                "name" => "Discipled by",
+                    'key' => 'dt_field_customizations',
+                    'value' => [
+                        'contacts' => [
+                            'coached_by' => [
+                                'name' => 'Discipled by',
                             ]
                         ]
                     ],
-                    "overwrite" => true
+                    'overwrite' => true
                 ]
             ]
         ];
@@ -109,7 +106,7 @@ class Disciple_Tools_Setup_Wizard_Tab_Advanced
       <tbody>
       <tr>
         <td class="overflow-scroll">
-          <pre><code><?php echo json_encode($sample, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) ?></code></pre>
+          <pre><code><?php echo json_encode( $sample, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) ?></code></pre>
         </td>
       </tr>
       </tbody>

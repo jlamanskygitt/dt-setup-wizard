@@ -38,9 +38,8 @@ class Disciple_Tools_Setup_Wizard_Actions {
     } // End __construct()
 
 
-    public function handle_ajax( )
-    {
-        dt_write_log('handle_ajax_post');
+    public function handle_ajax() {
+        dt_write_log( 'handle_ajax_post' );
         $key = isset( $_POST['key'] ) ? sanitize_text_field( wp_unslash( $_POST['key'] ) ) : null;
         $value = isset( $_POST['value'] ) ? sanitize_text_field( wp_unslash( $_POST['value'] ) ) : null;
         // $enabled = filter_var( $enabled, FILTER_VALIDATE_BOOLEAN );
@@ -54,12 +53,12 @@ class Disciple_Tools_Setup_Wizard_Actions {
             $response['message'] = 'Insecure request';
         } else if ( empty( $key ) ) {
             $response['message'] = 'Missing config key';
-        } else if ( !current_user_can('manage_dt') ) {
+        } else if ( !current_user_can( 'manage_dt' ) ) {
             $response['message'] = 'Insufficient permissions';
         } else {
-            switch ($key) {
+            switch ( $key ) {
                 case 'plugin:install':
-                    $slug = $this->install_plugin($value);
+                    $slug = $this->install_plugin( $value );
 
                     $response_code = 200;
                     $response['success'] = true;
@@ -67,9 +66,9 @@ class Disciple_Tools_Setup_Wizard_Actions {
                     $response['slug'] = $slug;
                     break;
                 case 'plugin:activate':
-                    $result = activate_plugin($value);
+                    $result = activate_plugin( $value );
 
-                    if (is_wp_error($result)) {
+                    if ( is_wp_error( $result ) ) {
                         $response_code = 500;
                         $response['error'] = $result;
                     } else {
@@ -79,8 +78,8 @@ class Disciple_Tools_Setup_Wizard_Actions {
                     }
                     break;
                 case 'user:create':
-                    $user_id = $this->create_user(json_decode($value, true));
-                    if (is_wp_error($user_id)) {
+                    $user_id = $this->create_user( json_decode( $value, true ) );
+                    if ( is_wp_error( $user_id ) ) {
                         $response_code = 500;
                         $response['error'] = $user_id;
                     } else {
@@ -91,8 +90,8 @@ class Disciple_Tools_Setup_Wizard_Actions {
                     }
                     break;
                 case 'option':
-                    $error = $this->set_option(json_decode($value, true));
-                    if (is_wp_error($error)) {
+                    $error = $this->set_option( json_decode( $value, true ) );
+                    if ( is_wp_error( $error ) ) {
                         $response_code = 500;
                         $response['error'] = $error;
                     } else {
@@ -103,7 +102,7 @@ class Disciple_Tools_Setup_Wizard_Actions {
                     break;
                 default:
                     $response['message'] = 'No matching action';
-                    dt_write_log("key: $key");
+                    dt_write_log( "key: $key" );
                     break;
             }
         }
@@ -154,17 +153,17 @@ class Disciple_Tools_Setup_Wizard_Actions {
 
         // For arrays/objects, we need to know if we should merge the new value with the old
         // or overwrite the old value with the new
-        if ( is_array($value) ) {
-            $previous_value = get_option($key);
+        if ( is_array( $value ) ) {
+            $previous_value = get_option( $key );
             if ( $option['overwrite'] ) {
-                return update_option($key, $value);
+                return update_option( $key, $value );
             } else {
                 // default: merge new with the old, with new values taking priority
                 $merged_value = array_replace_recursive( $previous_value, $value );
-                return update_option($key, $merged_value);
+                return update_option( $key, $merged_value );
             }
         }
-        return update_option($key, $value);
+        return update_option( $key, $value );
     }
 }
 Disciple_Tools_Setup_Wizard_Actions::instance();
