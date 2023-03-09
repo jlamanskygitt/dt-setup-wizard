@@ -65,6 +65,20 @@ function createUser(user) {
     });
 }
 
+function setOption(option) {
+  console.log('setting option: ', option);
+  showMessage(`Setting option: ${option.key}`);
+  sendAjaxRequest('option', option)
+    .then((data) => {
+      console.log('Set option', data);
+      showMessage(`Set option: ${option.key}`, 'success');
+    })
+    .catch((error) => {
+      console.error('Error setting option', error);
+      showMessage(`Error setting option: ${option.key}`, 'error');
+    });
+}
+
 function advancedConfigSubmit(evt) {
     if (evt) {
       evt.preventDefault();
@@ -104,6 +118,12 @@ function processConfig(config) {
   if (config.users) {
     for (user of config.users) {
       createUser(user);
+    }
+  }
+
+  if (config.options) {
+    for (option of config.options) {
+      setOption(option);
     }
   }
 }

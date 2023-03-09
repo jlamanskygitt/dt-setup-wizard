@@ -75,6 +75,23 @@ class Disciple_Tools_Setup_Wizard_Tab_Advanced {
           ],
           "displayName" => "John Doe"
         ]
+      ],
+      "options" => [
+        [
+          "key" => "blogname",
+          "value" => "My DT site"
+        ],
+        [
+          "key" => "dt_field_customizations",
+          "value" => [
+            "contacts" => [
+              "coached_by" => [
+                "name" => "Discipled by",
+              ]
+            ]
+          ],
+          "overwrite" => true
+        ]
       ]
     ];
     ?>

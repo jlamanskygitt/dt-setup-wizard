@@ -90,6 +90,17 @@ class Disciple_Tools_Setup_Wizard_Actions {
                         $response['userId'] = $user_id;
                     }
                     break;
+                case 'option':
+                    $error = $this->set_option(json_decode($value, true));
+                    if (is_wp_error($error)) {
+                        $response_code = 500;
+                        $response['error'] = $error;
+                    } else {
+                        $response_code = 200;
+                        $response['success'] = true;
+                        $response['message'] = 'Option saved';
+                    }
+                    break;
                 default:
                     $response['message'] = 'No matching action';
                     dt_write_log("key: $key");
@@ -135,6 +146,25 @@ class Disciple_Tools_Setup_Wizard_Actions {
             $user['locale'] ?? null,
             false
         );
+    }
+
+    public function set_option( $option ) {
+        $key = $option['key'];
+        $value = $option['value'];
+
+        // For arrays/objects, we need to know if we should merge the new value with the old
+        // or overwrite the old value with the new
+        if ( is_array($value) ) {
+            $previous_value = get_option($key);
+            if ( $option['overwrite'] ) {
+                return update_option($key, $value);
+            } else {
+                // default: merge new with the old, with new values taking priority
+                $merged_value = array_replace_recursive( $previous_value, $value );
+                return update_option($key, $merged_value);
+            }
+        }
+        return update_option($key, $value);
     }
 }
 Disciple_Tools_Setup_Wizard_Actions::instance();
