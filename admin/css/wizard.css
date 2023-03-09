@@ -8,6 +8,59 @@
     width: 100%;
     min-height: 10rem;
     white-space: nowrap;
+    font-family: Consolas,Monaco,monospace;
+    font-size: 12px;
+}
+
+.tab-advanced .postbox-container .overflow {
+    overflow-x:scroll;
+    max-width: 280px;
+}
+
+#wpbody-content:has(.tab-advanced) {
+    padding-bottom: 0px;
+    min-height: calc(100vh - 47px);
+}
+
+/* ==== Log messages ==== */
+#log-container {
+    width: 100%;
+    background-color: #ffffff;
+    clear: both;
+    margin-left: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0;
+    z-index: 10;
+}
+#log-container > button {
+    border: solid 1px lightgray;
+    transform: translateY(-50%);
+}
+ul.logs {
+    font-family: Consolas,Monaco,monospace;
+    margin: 0;
+    max-height: 2rem;
+    overflow-y: scroll;
+}
+#log-container.expand ul.logs {
+    max-height: 10rem;
+}
+ul.logs li:before {
+    content: 'Info: ';
+    color: #0dcaf0;
+    font-weight: bold;
+}
+ul.logs li.error:before {
+    content: 'Error: ';
+    color: #dc3545;
+}
+ul.logs li.success:before {
+    content: 'Success: ';
+    color: #198754;
 }
 
 /* ==== Status messages ==== */
@@ -19,6 +72,7 @@ ul.messages {
     flex-direction: column;
     align-items: end;
     padding: 1rem;
+    z-index: 11;
 }
 ul.messages li {
     padding: 0.5rem;

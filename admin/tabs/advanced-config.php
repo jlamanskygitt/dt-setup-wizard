@@ -46,7 +46,7 @@ class Disciple_Tools_Setup_Wizard_Tab_Advanced {
         <td>
           <form name="advancedConfig" onsubmit="advancedConfigSubmit(event)">
             <label for="config">JSON Config</label>
-            <textarea id="config" name="config"></textarea>
+            <textarea id="config" name="config" class="auto-expand" data-min-rows="3"></textarea>
 
             <button type="submit">Submit</button>
           </form>
@@ -87,7 +87,7 @@ class Disciple_Tools_Setup_Wizard_Tab_Advanced {
       </thead>
       <tbody>
       <tr>
-        <td>
+        <td class="overflow-scroll">
           <pre><code><?php echo json_encode($sample, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) ?></code></pre>
         </td>
       </tr>

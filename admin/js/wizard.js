@@ -108,16 +108,52 @@ function processConfig(config) {
   }
 }
 
-function showMessage(content, context) {
-  const container = document.getElementById('message-container');
+function createMessageLi(content, context) {
   const message = document.createElement('li');
   message.innerHTML = content;
   if (context) {
     message.classList.add(context);
   }
-  container.append(message);
+  return message;
+}
+function showMessage(content, context) {
+  const msgContainer = document.getElementById('message-container');
+  const message = createMessageLi(content, context);
+  msgContainer.append(message);
+
+  const logContainer = document.getElementById('log-container');
+  const log = createMessageLi(content, context);
+  const logs = logContainer.getElementsByClassName('logs');
+  if (logs && logs.length) {
+    logs[0].append(log);
+    logs[0].scrollTo(0, logs[0].scrollHeight);
+  }
 
   setTimeout(function () {
     message.remove();
   }, 6500);
 }
+function toggleLogContainer(evt) {
+  const container = document.getElementById('log-container');
+  if (container) {
+    container.classList.toggle('expand');
+  }
+  const dashicons = (evt.currentTarget || evt.target).getElementsByClassName('dashicons');
+  if (dashicons) {
+    for (dashicon of dashicons) {
+      dashicon.classList.toggle('dashicons-arrow-down-alt2');
+      dashicon.classList.toggle('dashicons-arrow-up-alt2');
+    }
+  }
+}
+
+function onExpandableTextareaInput({ target:elm }){
+  // make sure the input event originated from a textarea and it's desired to be auto-expandable
+  if( !elm.classList.contains('auto-expand') || !elm.nodeName == 'TEXTAREA' ) return
+
+  if (elm.scrollHeight > elm.offsetHeight) {
+    elm.style.minHeight = `calc(${elm.scrollHeight}px + 2rem)`;
+  }
+}
+// global delegated event listener
+document.addEventListener('input', onExpandableTextareaInput)

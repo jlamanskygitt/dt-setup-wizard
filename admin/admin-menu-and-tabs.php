@@ -131,6 +131,18 @@ class Disciple_Tools_Setup_Wizard_Menu {
 <!--            <li class="success">Plugin activated: https://github.com/DiscipleTools/disciple-tools-mobile-app-plugin/releases/latest/download/disciple-tools-mobile-app-plugin.zip</li>-->
 <!--            <li class="error">Failed to install plugin</li>-->
         </ul>
+
+        <div id="log-container">
+            <button class="toggle" onclick="toggleLogContainer(event)">
+                <span class="dashicons dashicons-arrow-up-alt2"></span>
+            </button>
+            <ul class="logs">
+                <li>Installing plugin</li>
+                <li class="success">Plugin installed</li>
+                <li class="success">Plugin activated: https://github.com/DiscipleTools/disciple-tools-mobile-app-plugin/releases/latest/download/disciple-tools-mobile-app-plugin.zip</li>
+                <li class="error">Failed to install plugin</li>
+            </ul>
+        </div>
         <?php
     }
 }
