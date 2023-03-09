@@ -37,8 +37,7 @@ class Disciple_Tools_Setup_Wizard_Menu {
 
         add_action( 'admin_menu', array( $this, 'register_menu' ) );
 
-        add_action( 'wp_enqueue_scripts', array( $this, 'process_scripts' ) );
-        add_action( 'wp_enqueue_styles', array( $this, 'process_scripts' ) );
+        add_action( 'admin_enqueue_scripts', array( $this, 'process_scripts' ) );
 
         $this->page_title = __( 'Setup Wizard', 'disciple-tools-setup-wizard' );
 
@@ -63,7 +62,7 @@ class Disciple_Tools_Setup_Wizard_Menu {
      */
     public function extensions_menu() {}
 
-    private function process_scripts() {
+    public function process_scripts() {
         wp_enqueue_script( 'dt_setup_wizard_script', plugin_dir_url( __FILE__ ) . 'js/wizard.js', [
             // 'jquery',
             'lodash'
@@ -74,9 +73,6 @@ class Disciple_Tools_Setup_Wizard_Menu {
                 'dt_xyz' => ''
             )
         );
-    }
-
-    private function process_styles() {
         wp_enqueue_style( 'dt_setup_wizard_css', plugin_dir_url( __FILE__ ) . 'css/wizard.css', false,
         filemtime( dirname( __FILE__ ) . '/css/wizard.css' ) );
     }
