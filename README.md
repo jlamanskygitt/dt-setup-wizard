@@ -1,4 +1,4 @@
-![Build Status](https://github.com/cairocoder01/disciple-tools-setup-wizard/actions/workflows/ci.yml/badge.svg?branch=master)
+![Build Status](https://github.com/cairocoder01/dt-setup-wizard/actions/workflows/ci.yml/badge.svg?branch=master)
 
 ![Plugin Banner](https://github.com/cairocoder01/dt-setup-wizard/raw/master/documentation/banner.png)
 

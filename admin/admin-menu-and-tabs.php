@@ -37,9 +37,9 @@ class Disciple_Tools_Setup_Wizard_Menu {
 
         add_action( 'admin_menu', array( $this, 'register_menu' ) );
 
-        $this->process_scripts();
-        $this->process_styles();
-
+        add_action('wp_enqueue_scripts', array( $this, 'process_scripts'));
+        add_action('wp_enqueue_styles', array( $this, 'process_scripts'));
+        
         $this->page_title = __( 'Setup Wizard', 'disciple-tools-setup-wizard' );
 
         require_once( 'admin-actions.php' ); // adds ajax action handler
