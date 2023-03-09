@@ -78,6 +78,18 @@ class Disciple_Tools_Setup_Wizard_Actions {
                         $response['message'] = 'Plugin activated';
                     }
                     break;
+                case 'user:create':
+                    $user_id = $this->create_user(json_decode($value, true));
+                    if (is_wp_error($user_id)) {
+                        $response_code = 500;
+                        $response['error'] = $user_id;
+                    } else {
+                        $response_code = 200;
+                        $response['success'] = true;
+                        $response['message'] = 'User created';
+                        $response['userId'] = $user_id;
+                    }
+                    break;
                 default:
                     $response['message'] = 'No matching action';
                     dt_write_log("key: $key");
@@ -107,6 +119,22 @@ class Disciple_Tools_Setup_Wizard_Actions {
 
             return $plugin_slug;
         }
+    }
+
+    public function create_user( $user ) {
+        return Disciple_Tools_Users::create_user(
+            $user['username'],
+            $user['email'],
+            $user['displayName'],
+            $user['roles'],
+            $user['corresponds_to_contact'] ?? null,
+            $user['locale'] ?? null,
+            false,
+            $user['password'] ?? null,
+            $user['optionalFields'] ?? [],
+            $user['locale'] ?? null,
+            false
+        );
     }
 }
 Disciple_Tools_Setup_Wizard_Actions::instance();

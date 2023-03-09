@@ -4,12 +4,18 @@ function sendAjaxRequest(key, value) {
   data.append('security_headers_nonce', nonce);
   data.append('action', 'dt_setup_wizard_ajax');
   data.append('key', key);
-  data.append('value', value);
+  data.append('value', JSON.stringify(value));
 
   return fetch(ajaxurl, {
     method: 'POST',
     body: data,
-  }).then((response) => response.json());
+  }).then((response) => response.json())
+    .then((data) => {
+      if (!data || !data.success) {
+        throw data;
+      }
+      return data;
+    });
 }
 
 function install(plug) {
@@ -17,10 +23,7 @@ function install(plug) {
   showMessage(`Installing: ${plug}`);
   sendAjaxRequest('plugin:install', plug)
     .then((data) => {
-      if (!data || !data.success) {
-        console.error('Error installing plugin.', data);
-        showMessage(`Error installing plugin ${plug}`, 'error');
-      } else if (data.slug) {
+      if (data.slug) {
         console.log('Successfully installed ' + data.slug);
         showMessage(`Installed ${plug}`, 'success');
         activate(`${data.slug}/${data.slug}.php`);
@@ -37,17 +40,28 @@ function activate(plug) {
   showMessage(`Activating: ${plug}`);
   sendAjaxRequest('plugin:activate', plug)
     .then((data) => {
-      if (!data || !data.success) {
-        console.error('Error activated plugin.', data);
-        showMessage(`Error activated plugin ${plug}`, 'error');
-      } else {
-        console.log('Successfully activated ' + plug);
-        showMessage(`Activated ${plug}`, 'success');
-      }
+      console.log('Successfully activated ' + plug);
+      showMessage(`Activated ${plug}`, 'success');
     })
     .catch((error) => {
       console.error('Error activating plugin.', error);
       showMessage(`Error activated plugin ${plug}`, 'error');
+    });
+}
+
+function createUser(user) {
+  console.log('creating user: ', user);
+  showMessage(`Creating user: ${user.username}`);
+  sendAjaxRequest('user:create', user)
+    .then((data) => {
+      if (data.userId) {
+        console.log('Created user', data.user);
+        showMessage(`Created user: ${user.username} (#${data.userId})`, 'success');
+      }
+    })
+    .catch((error) => {
+      console.error('Error creating user', error);
+      showMessage(`Error creating user: ${user.username}`, 'error');
     });
 }
 
@@ -84,6 +98,12 @@ function processConfig(config) {
   if (config.plugins) {
     for (plugin of config.plugins) {
       install(plugin);
+    }
+  }
+
+  if (config.users) {
+    for (user of config.users) {
+      createUser(user);
     }
   }
 }

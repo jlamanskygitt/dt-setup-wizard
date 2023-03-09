@@ -64,6 +64,17 @@ class Disciple_Tools_Setup_Wizard_Tab_Advanced {
       "plugins" => [
         "https://github.com/DiscipleTools/disciple-tools-webform/releases/latest/download/disciple-tools-webform.zip",
         "https://github.com/DiscipleTools/disciple-tools-mobile-app-plugin/releases/latest/download/disciple-tools-mobile-app-plugin.zip"
+      ],
+      "users" => [
+        [
+          "username" => "testuser",
+          "email" => "test@test.com",
+          "roles" => [
+            "multiplier",
+            "partner"
+          ],
+          "displayName" => "John Doe"
+        ]
       ]
     ];
     ?>
