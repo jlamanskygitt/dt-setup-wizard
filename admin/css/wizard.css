@@ -12,9 +12,10 @@
     font-size: 12px;
 }
 
-.tab-advanced .postbox-container .overflow {
-    overflow-x:scroll;
-    max-width: 280px;
+.tab-advanced .postbox-container code {
+    display: block;
+    overflow-x: scroll;
+    max-width: 270px;
 }
 
 #wpbody-content:has(.tab-advanced) {
@@ -24,16 +25,14 @@
 
 /* ==== Log messages ==== */
 #log-container {
-    width: 100%;
+    width: calc(100% + 20px);
     background-color: #ffffff;
     clear: both;
-    margin-left: -20px;
-    padding-left: 20px;
-    padding-right: 20px;
     display: flex;
     flex-direction: column;
     position: absolute;
     bottom: 0;
+    right: 0;
     z-index: 10;
 }
 #log-container > button {
@@ -43,8 +42,9 @@
 ul.logs {
     font-family: Consolas,Monaco,monospace;
     margin: 0;
-    max-height: 2rem;
+    max-height: 0rem;
     overflow-y: scroll;
+    padding: 0 20px;
 }
 #log-container.expand ul.logs {
     max-height: 10rem;

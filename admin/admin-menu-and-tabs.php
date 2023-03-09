@@ -105,7 +105,7 @@ class Disciple_Tools_Setup_Wizard_Menu {
             <h2 class="nav-tab-wrapper">
                 <a href="<?php echo esc_attr( $link ) . 'advanced' ?>"
                    class="nav-tab <?php echo esc_html( ( $tab == 'advanced' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">Advanced</a>
-<?php /*                <a href="<?php echo esc_attr( $link ) . 'second' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'second' ) ? 'nav-tab-active' : '' ); ?>">Second</a> */ ?>
+        <?php /*        <a href="<?php echo esc_attr( $link ) . 'second' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'second' ) ? 'nav-tab-active' : '' ); ?>">Second</a> */ ?>
             </h2>
 
             <?php
@@ -125,23 +125,13 @@ class Disciple_Tools_Setup_Wizard_Menu {
 
         </div><!-- End wrap -->
 
-        <ul class="messages" id="message-container">
-<!--            <li>Installing plugin</li>-->
-<!--            <li class="success">Plugin installed</li>-->
-<!--            <li class="success">Plugin activated: https://github.com/DiscipleTools/disciple-tools-mobile-app-plugin/releases/latest/download/disciple-tools-mobile-app-plugin.zip</li>-->
-<!--            <li class="error">Failed to install plugin</li>-->
-        </ul>
+        <ul class="messages" id="message-container"></ul>
 
         <div id="log-container">
             <button class="toggle" onclick="toggleLogContainer(event)">
                 <span class="dashicons dashicons-arrow-up-alt2"></span>
             </button>
-            <ul class="logs">
-                <li>Installing plugin</li>
-                <li class="success">Plugin installed</li>
-                <li class="success">Plugin activated: https://github.com/DiscipleTools/disciple-tools-mobile-app-plugin/releases/latest/download/disciple-tools-mobile-app-plugin.zip</li>
-                <li class="error">Failed to install plugin</li>
-            </ul>
+            <ul class="logs"></ul>
         </div>
         <?php
     }
