@@ -1,62 +1,76 @@
-function sendAjaxRequest(key, value) {
-  var data = new FormData();
-  var nonce = document.getElementById('security_headers_nonce').value;
-  data.append('security_headers_nonce', nonce);
-  data.append('action', 'dt_setup_wizard_ajax');
-  data.append('key', key);
-  data.append('value', JSON.stringify(value));
+function sendApiRequest(endpoint, data, basePath) {
+  const formData = new FormData();
+  buildFormData(formData, data);
 
-  return fetch(ajaxurl, {
+  return fetch(`/wp-json/${basePath ?? 'dt-core/v1'}${endpoint}`, {
     method: 'POST',
-    body: data,
-  }).then((response) => response.json())
-    .then((data) => {
-      if (!data || !data.success) {
-        throw data;
-      }
-      return data;
-    });
+    body: formData,
+    headers: {
+      "X-WP-Nonce": window.wpApiSettings.nonce,
+    }
+  }).then((response) => response.json());
 }
 
-function install(plug) {
-  console.log('installing: ' + plug);
-  showMessage(`Installing: ${plug}`);
-  sendAjaxRequest('plugin:install', plug)
-    .then((data) => {
-      if (data.slug) {
-        console.log('Successfully installed ' + data.slug);
-        showMessage(`Installed ${plug}`, 'success');
-        activate(`${data.slug}/${data.slug}.php`);
+function buildFormData (formData, data, parentKey) {
+  if (data && typeof data === 'object' && !(data instanceof Date) && !(data instanceof File)) {
+    Object.keys(data).forEach(key => {
+      buildFormData(formData, data[key], parentKey ? `${parentKey}[${key}]` : key);
+    });
+  } else {
+    const value = data == null ? '' : data;
+
+    formData.append(parentKey, value);
+  }
+};
+
+function install(pluginUrl) {
+  const slug = pluginUrl.split('/')[4];
+  console.log('installing: ' + slug);
+  showMessage(`Installing: ${slug}`);
+  sendApiRequest('/plugin-install', { download_url: pluginUrl })
+    .then((success) => {
+      if (success) {
+        console.log('Successfully installed ' + slug);
+        showMessage(`Installed ${slug}`, 'success');
+        activate(slug);
+      } else {
+        throw new Exception('Error');
       }
     })
     .catch((error) => {
       console.error('Error installing plugin.', error);
-      showMessage(`Error installing plugin ${plug}`, 'error');
+      showMessage(`Error installing plugin ${pluginUrl}`, 'error');
     });
 }
 
-function activate(plug) {
-  console.log('activating: ' + plug);
-  showMessage(`Activating: ${plug}`);
-  sendAjaxRequest('plugin:activate', plug)
-    .then((data) => {
-      console.log('Successfully activated ' + plug);
-      showMessage(`Activated ${plug}`, 'success');
+function activate(pluginSlug) {
+  console.log('activating: ' + pluginSlug);
+  showMessage(`Activating: ${pluginSlug}`);
+  sendApiRequest('/plugin-activate', { plugin_slug: pluginSlug })
+    .then(function(success) {
+      if (success) {
+        console.log('Successfully activated ' + pluginSlug);
+        showMessage(`Activated ${pluginSlug}`, 'success');
+      } else {
+        throw new Exception('Error');
+      }
     })
     .catch((error) => {
       console.error('Error activating plugin.', error);
-      showMessage(`Error activated plugin ${plug}`, 'error');
+      showMessage(`Error activating plugin ${pluginSlug}`, 'error');
     });
 }
 
 function createUser(user) {
   console.log('creating user: ', user);
   showMessage(`Creating user: ${user.username}`);
-  sendAjaxRequest('user:create', user)
+  sendApiRequest('/user', user, 'disciple-tools-setup-wizard/v1')
     .then((data) => {
-      if (data.userId) {
-        console.log('Created user', data.user);
-        showMessage(`Created user: ${user.username} (#${data.userId})`, 'success');
+      if (data && Number.isInteger(data)) {
+        console.log('Created user', data);
+        showMessage(`Created user: ${user.username} (#${data})`, 'success');
+      } else {
+        throw data;
       }
     })
     .catch((error) => {
@@ -68,7 +82,7 @@ function createUser(user) {
 function setOption(option) {
   console.log('setting option: ', option);
   showMessage(`Setting option: ${option.key}`);
-  sendAjaxRequest('option', option)
+  sendApiRequest('/option', option, 'disciple-tools-setup-wizard/v1')
     .then((data) => {
       console.log('Set option', data);
       showMessage(`Set option: ${option.key}`, 'success');
@@ -92,7 +106,7 @@ function advancedConfigSubmit(evt) {
     }
 
     try {
-      console.log(configRaw);
+      // console.log(configRaw);
       const config = JSON.parse(configRaw);
 
       processConfig(config);
@@ -100,14 +114,10 @@ function advancedConfigSubmit(evt) {
       console.error(error);
       showMessage('Could not parse config JSON', 'error');
     }
-    // console.log('submitting', formData);
-    // install('https://github.com/DiscipleTools/disciple-tools-webform/releases/latest/download/disciple-tools-webform.zip');
-    // activate('disciple-tools-webform/disciple-tools-webform.php');
-    // return false;
 }
 
 function processConfig(config) {
-  console.log('Processing: ', config);
+  // console.log('Processing: ', config);
 
   if (config.plugins) {
     for (plugin of config.plugins) {

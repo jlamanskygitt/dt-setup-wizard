@@ -87,6 +87,10 @@ class Disciple_Tools_Setup_Wizard {
     }
 
     private function __construct() {
+        $is_rest = dt_is_rest();
+        if ( $is_rest && strpos( dt_get_url_path(), 'disciple-tools-setup-wizard' ) !== false ) {
+            require_once( 'rest-api/rest-api.php' ); // adds starter rest api class
+        }
 
         if ( is_admin() ) {
             require_once( 'admin/admin-menu-and-tabs.php' ); // adds starter admin page and section for plugin

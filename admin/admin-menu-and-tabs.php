@@ -41,7 +41,6 @@ class Disciple_Tools_Setup_Wizard_Menu {
 
         $this->page_title = __( 'Setup Wizard', 'disciple-tools-setup-wizard' );
 
-        require_once( 'admin-actions.php' ); // adds ajax action handler
         require_once( 'tabs/advanced-config.php' );
 
     } // End __construct()
