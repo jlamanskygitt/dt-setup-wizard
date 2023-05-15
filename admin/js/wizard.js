@@ -24,23 +24,50 @@ function buildFormData (formData, data, parentKey) {
 };
 
 function install(pluginUrl) {
-  const slug = pluginUrl.split('/')[4];
+  const isDtPlugin = pluginUrl.includes('http') || pluginUrl.includes('/');
+  const slug = isDtPlugin
+    ? pluginUrl.split('/')[4]
+    : pluginUrl;
   console.log('installing: ' + slug);
   showMessage(`Installing: ${slug}`);
-  sendApiRequest('/plugin-install', { download_url: pluginUrl })
-    .then((success) => {
-      if (success) {
-        console.log('Successfully installed ' + slug);
-        showMessage(`Installed ${slug}`, 'success');
-        activate(slug);
-      } else {
-        throw new Exception('Error');
+  if (isDtPlugin) {
+    sendApiRequest('/plugin-install', { download_url: pluginUrl })
+      .then((success) => {
+        if (success) {
+          console.log('Successfully installed ' + slug);
+          showMessage(`Installed ${slug}`, 'success');
+          activate(slug);
+        } else {
+          throw new Exception('Error');
+        }
+      })
+      .catch((error) => {
+        console.error('Error installing plugin.', error);
+        showMessage(`Error installing plugin ${pluginUrl}`, 'error');
+      });
+  } else {
+    const body = new FormData();
+    body.append('slug', slug);
+    body.append('status', 'active');
+    // console.log(window.wpApiSettings);
+    const url = `${window.wpApiSettings.root}${window.wpApiSettings.versionString}plugins`;
+
+    fetch(url, {
+      method: 'POST',
+      body,
+      headers: {
+        "X-WP-Nonce": window.wpApiSettings.nonce,
       }
-    })
-    .catch((error) => {
-      console.error('Error installing plugin.', error);
-      showMessage(`Error installing plugin ${pluginUrl}`, 'error');
-    });
+    }).then((response) => response.json())
+      .then((success) => {
+        console.log('Successfully installed ' + slug, success);
+        showMessage(`Installed and Activated ${slug}`, 'success');
+      })
+      .catch((error) => {
+        console.error('Error installing plugin.', error);
+        showMessage(`Error installing plugin ${pluginUrl}`, 'error');
+      });
+  }
 }
 
 function activate(pluginSlug) {

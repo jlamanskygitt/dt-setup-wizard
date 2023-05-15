@@ -5,7 +5,7 @@
  * Description: Disciple.Tools - Setup Wizard is intended to help developers and integrator jumpstart their extension of the Disciple.Tools system.
  * Text Domain: disciple-tools-setup-wizard
  * Domain Path: /languages
- * Version:  0.1
+ * Version:  0.2
  * Author URI: https://github.com/cairocoder01
  * GitHub Plugin URI: https://github.com/cairocoder01/disciple-tools-setup-wizard
  * Requires at least: 4.7.0
@@ -97,6 +97,11 @@ class Disciple_Tools_Setup_Wizard {
         }
 
         $this->i18n();
+
+        add_filter( 'allowed_wp_v2_paths', function ( $paths ) {
+            array_push( $paths, '/wp/v2/plugins');
+            return $paths;
+        } );
 
     }
 
