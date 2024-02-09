@@ -43,6 +43,8 @@ class Disciple_Tools_Setup_Wizard_Menu {
 
         require_once( 'tabs/advanced-config.php' );
 
+        require_once( 'tabs/settings-config.php' );
+
     } // End __construct()
 
 
@@ -100,13 +102,19 @@ class Disciple_Tools_Setup_Wizard_Menu {
             <h2 class="nav-tab-wrapper">
                 <a href="<?php echo esc_attr( $link ) . 'advanced' ?>"
                    class="nav-tab <?php echo esc_html( ( $tab == 'advanced' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">Advanced</a>
-        <?php /*        <a href="<?php echo esc_attr( $link ) . 'second' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'second' ) ? 'nav-tab-active' : '' ); ?>">Second</a> */ ?>
+                <a href="<?php echo esc_attr( $link ) . 'settings' ?>"
+                   class="nav-tab <?php echo esc_html( ( $tab == 'settings' ) ? 'nav-tab-active' : '' ); ?>">Second</a>
             </h2>
 
             <?php
             switch ( $tab ) {
                 case 'general':
+                case 'advanced' :
                     $object = new Disciple_Tools_Setup_Wizard_Tab_Advanced();
+                    $object->content();
+                    break;
+                case 'settings':
+                    $object = new Disciple_Tools_Setup_Wizard_Tab_Settings();
                     $object->content();
                     break;
                 case 'second':
