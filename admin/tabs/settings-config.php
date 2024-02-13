@@ -1,13 +1,13 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
-  
+
 /**
  * Class Disciple_Tools_Setup_Wizard_Tab_Settings
  */
 class Disciple_Tools_Setup_Wizard_Tab_Settings
 {
     public function content() {
-      
+
         ?>
         <div class="wrap tab-advanced">
           <div id="poststuff">
@@ -35,8 +35,8 @@ class Disciple_Tools_Setup_Wizard_Tab_Settings
     }
 
     public function main_column() {
-      global $wpdb;
-      $setting = $wpdb->get_row("SELECT option_value FROM wp_options WHERE option_name = 'dt_setup_wizard_config'");
+        global $wpdb;
+        $setting = $wpdb->get_row( "SELECT option_value FROM wp_options WHERE option_name = 'dt_setup_wizard_config'" );
         ?>
         <!-- Box -->
         <table class="widefat striped">
@@ -51,7 +51,7 @@ class Disciple_Tools_Setup_Wizard_Tab_Settings
               <form name="settingsConfig" onsubmit="settingsConfigSubmit(event)">
                 <label for="config">JSON Config</label>
 
-                  <textarea id="config" name="config" class="auto-expand" data-min-rows="3" ><?php echo($setting->option_value);?></textarea>
+                  <textarea id="config" name="config" class="auto-expand" data-min-rows="3" ><?php echo( $setting->option_value );?></textarea>
 
                 <button type="submit">Submit</button>
               </form>
@@ -64,20 +64,20 @@ class Disciple_Tools_Setup_Wizard_Tab_Settings
         <?php
     }
 
-    function submitJson($event) {
-      settingsConfigSubmit($event);
+    function submitJson( $event ) {
+        settingsConfigSubmit( $event );
       /*
       try{
-        data = 
+        data =
         console.log("success");
       } catch(error){
           console.log(error);
       }
-      
+
       if (!is_null($data)){
         global $wpdb;
         $optionsDB = $wpdb->prefix.'options';
-    
+
         $wpdb->insert(
         $optionsDB,
           [
@@ -89,40 +89,40 @@ class Disciple_Tools_Setup_Wizard_Tab_Settings
     }
 
     public function right_column() {
-        $sample = [
-            'plugins' => [
+        $sample = array(
+            'plugins' => array(
                 'https://github.com/DiscipleTools/disciple-tools-webform/releases/latest/download/disciple-tools-webform.zip',
-                'https://github.com/DiscipleTools/disciple-tools-mobile-app-plugin/releases/latest/download/disciple-tools-mobile-app-plugin.zip'
-            ],
-            'users' => [
-                [
+                'https://github.com/DiscipleTools/disciple-tools-mobile-app-plugin/releases/latest/download/disciple-tools-mobile-app-plugin.zip',
+            ),
+            'users' => array(
+                array(
                     'username' => 'testuser',
                     'email' => 'test@test.com',
-                    'roles' => [
+                    'roles' => array(
                         'multiplier',
-                        'partner'
-                    ],
-                    'displayName' => 'John Doe'
-                ]
-            ],
-            'options' => [
-                [
+                        'partner',
+                    ),
+                    'displayName' => 'John Doe',
+                ),
+            ),
+            'options' => array(
+                array(
                     'key' => 'blogname',
-                    'value' => 'My DT site'
-                ],
-                [
+                    'value' => 'My DT site',
+                ),
+                array(
                     'key' => 'dt_field_customizations',
-                    'value' => [
-                        'contacts' => [
-                            'coached_by' => [
+                    'value' => array(
+                        'contacts' => array(
+                            'coached_by' => array(
                                 'name' => 'Discipled by',
-                            ]
-                        ]
-                    ],
-                    'overwrite' => true
-                ]
-            ]
-        ];
+                            ),
+                        ),
+                    ),
+                    'overwrite' => true,
+                ),
+            ),
+        );
         ?>
     <!-- Box -->
     <table class="widefat striped">

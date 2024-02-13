@@ -41,10 +41,9 @@ class Disciple_Tools_Setup_Wizard_Menu {
 
         $this->page_title = __( 'Setup Wizard', 'disciple-tools-setup-wizard' );
 
-        require_once( 'tabs/advanced-config.php' );
+        require_once 'tabs/advanced-config.php';
 
-        require_once( 'tabs/settings-config.php' );
-
+        require_once 'tabs/settings-config.php';
     } // End __construct()
 
 
@@ -55,7 +54,7 @@ class Disciple_Tools_Setup_Wizard_Menu {
     public function register_menu() {
         $this->page_title = __( 'Setup Wizard', 'disciple-tools-setup-wizard' );
 
-        add_submenu_page( 'dt_extensions', $this->page_title, $this->page_title, 'manage_dt', $this->token, [ $this, 'content' ] );
+        add_submenu_page( 'dt_extensions', $this->page_title, $this->page_title, 'manage_dt', $this->token, array( $this, 'content' ) );
     }
 
     /**
@@ -64,18 +63,18 @@ class Disciple_Tools_Setup_Wizard_Menu {
     public function extensions_menu() {}
 
     public function process_scripts() {
-        wp_enqueue_script( 'dt_setup_wizard_script', plugin_dir_url( __FILE__ ) . 'js/wizard.js', [
+        wp_enqueue_script( 'dt_setup_wizard_script', plugin_dir_url( __FILE__ ) . 'js/wizard.js', array(
             // 'jquery',
-            'lodash'
-        ], filemtime( dirname( __FILE__ ) . '/js/wizard.js' ), true );
+            'lodash',
+        ), filemtime( __DIR__ . '/js/wizard.js' ), true );
 
         wp_localize_script(
             'dt_magic_links_general_script', 'dt_magic_links', array(
-                'dt_xyz' => ''
+                'dt_xyz' => '',
             )
         );
         wp_enqueue_style( 'dt_setup_wizard_css', plugin_dir_url( __FILE__ ) . 'css/wizard.css', false,
-        filemtime( dirname( __FILE__ ) . '/css/wizard.css' ) );
+        filemtime( __DIR__ . '/css/wizard.css' ) );
     }
     /**
      * Builds page contents
