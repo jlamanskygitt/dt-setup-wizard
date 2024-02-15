@@ -102,7 +102,7 @@ class Disciple_Tools_Setup_Wizard_Menu {
                 <a href="<?php echo esc_attr( $link ) . 'advanced' ?>"
                    class="nav-tab <?php echo esc_html( ( $tab == 'advanced' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">Advanced</a>
                 <a href="<?php echo esc_attr( $link ) . 'settings' ?>"
-                   class="nav-tab <?php echo esc_html( ( $tab == 'settings' ) ? 'nav-tab-active' : '' ); ?>">Second</a>
+                   class="nav-tab <?php echo esc_html( ( $tab == 'settings' ) ? 'nav-tab-active' : '' ); ?>">Settings</a>
             </h2>
 
             <?php

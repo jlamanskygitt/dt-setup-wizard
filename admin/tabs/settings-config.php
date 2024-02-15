@@ -36,7 +36,7 @@ class Disciple_Tools_Setup_Wizard_Tab_Settings
 
     public function main_column() {
         global $wpdb;
-        $setting = $wpdb->get_row( "SELECT option_value FROM wp_options WHERE option_name = 'dt_setup_wizard_config'" );
+        $setting = get_option( 'dt_setup_wizard_config' );
         ?>
         <!-- Box -->
         <table class="widefat striped">
@@ -51,7 +51,7 @@ class Disciple_Tools_Setup_Wizard_Tab_Settings
               <form name="settingsConfig" onsubmit="settingsConfigSubmit(event)">
                 <label for="config">JSON Config</label>
 
-                  <textarea id="config" name="config" class="auto-expand" data-min-rows="3" ><?php echo( $setting->option_value );?></textarea>
+                <textarea id="config" name="config" class="auto-expand" data-min-rows="3" ><?php echo( $setting );?></textarea>
 
                 <button type="submit">Submit</button>
               </form>
@@ -64,65 +64,113 @@ class Disciple_Tools_Setup_Wizard_Tab_Settings
         <?php
     }
 
-    function submitJson( $event ) {
-        settingsConfigSubmit( $event );
-      /*
-      try{
-        data =
-        console.log("success");
-      } catch(error){
-          console.log(error);
-      }
-
-      if (!is_null($data)){
-        global $wpdb;
-        $optionsDB = $wpdb->prefix.'options';
-
-        $wpdb->insert(
-        $optionsDB,
-          [
-            'option_name' => 'JSON',
-            'option_value' => $data
-          ]
-        );
-      }*/
-    }
-
     public function right_column() {
-        $sample = array(
-            'plugins' => array(
-                'https://github.com/DiscipleTools/disciple-tools-webform/releases/latest/download/disciple-tools-webform.zip',
-                'https://github.com/DiscipleTools/disciple-tools-mobile-app-plugin/releases/latest/download/disciple-tools-mobile-app-plugin.zip',
-            ),
-            'users' => array(
-                array(
-                    'username' => 'testuser',
-                    'email' => 'test@test.com',
-                    'roles' => array(
-                        'multiplier',
-                        'partner',
-                    ),
-                    'displayName' => 'John Doe',
-                ),
-            ),
-            'options' => array(
-                array(
-                    'key' => 'blogname',
-                    'value' => 'My DT site',
-                ),
-                array(
-                    'key' => 'dt_field_customizations',
-                    'value' => array(
-                        'contacts' => array(
-                            'coached_by' => array(
-                                'name' => 'Discipled by',
-                            ),
-                        ),
-                    ),
-                    'overwrite' => true,
-                ),
-            ),
-        );
+        $sample = json_decode(
+            '{
+          "steps": [{
+            "name": "Basic Settings",
+            "description": "Enter basic blog settings",
+            "config": {
+                "options": [{
+                    "key": "blogname",
+                    "value": "M2M Journey Tools"
+                }, {
+                    "key": "blogdescription",
+                    "value": " "
+                }, {
+                    "key": "admin_email",
+                    "value": "xg-web-admin@xtendglobal.org"
+                }]
+            }
+        }, {
+            "name": "Custom Roles",
+            "description": "Ensure any custom roles are added.",
+            "config": {
+                "options": [{
+                    "key": "dt_custom_roles",
+                    "value": {
+                        "custom_plugin_admin": {
+                            "description": "This role only has the ability to access D.T\'s wp-admin, manage D.T, and edit plugins, notably to manage plugin integrations. Role has no access to post data.",
+                            "label": "Plugin Admin",
+                            "slug": "custom_plugin_admin",
+                            "capabilities": [
+                                "access_disciple_tools",
+                                "edit_plugins",
+                                "activate_plugins",
+                                "manage_dt",
+                                "manage_options",
+                                "read"
+                            ]
+                        }
+                    }
+                }]
+            }
+        }, {
+            "name": "Mapping",
+            "description": "Create a geocoding key at [https://console.cloud.google.com/apis/credentials?project=disciple-tools-geocoding](https://console.cloud.google.com/apis/credentials?project=disciple-tools-geocoding). Key should have permissions for\n\n - Geocoding API\n - Maps Javascript API\n - Places API\n\nEnter the created API Key below.",
+            "config": {
+                "options": [{
+                    "key": "x"
+                }]
+            }
+        }, {
+            "name": "Plugins",
+            "description": "Confirm the appropriate plugins are installed and activated",
+            "config": {
+                "plugins": [
+                    { "slug": "easy-wp-smtp"},
+                    { "slug": "wp-webhooks" },
+                    { "slug": "disciple-tools-advanced-security", "url": "https://github.com/cairocoder01/disciple-tools-advanced-security/releases/latest/download/disciple-tools-advanced-security.zip"},
+                    { "slug": "disciple-tools-data-reporting", "url": "https://github.com/cairocoder01/disciple-tools-data-reporting/releases/latest/download/disciple-tools-data-reporting.zip"},
+                    { "slug": "disciple-tools-echo", "url": "https://github.com/DiscipleTools/disciple-tools-echo/releases/latest/download/disciple-tools-echo.zip"},
+                    { "slug": "disciple-tools-bulk-magic-link-sender", "url": "https://github.com/DiscipleTools/disciple-tools-bulk-magic-link-sender/releases/latest/download/disciple-tools-bulk-magic-link-sender.zip"},
+                    { "slug": "disciple-tools-dashboard", "url": "https://github.com/DiscipleTools/disciple-tools-dashboard/releases/latest/download/disciple-tools-dashboard.zip"},
+                    { "slug": "disciple-tools-facebook", "url": "https://github.com/DiscipleTools/disciple-tools-facebook/releases/latest/download/disciple-tools-facebook.zip" },
+                    { "slug": "disciple-tools-genmapper", "url": "https://github.com/DiscipleTools/disciple-tools-genmapper/releases/latest/download/disciple-tools-genmapper.zip"},
+                    { "slug": "disciple-tools-import", "url": "https://github.com/DiscipleTools/disciple-tools-import/releases/latest/download/disciple-tools-import.zip"},
+                    { "slug": "disciple-tools-mobile-app-plugin", "url": "https://github.com/DiscipleTools/disciple-tools-mobile-app-plugin/releases/latest/download/disciple-tools-mobile-app-plugin.zip"},
+                    { "slug": "disciple-tools-network-dashboard", "url": "https://github.com/DiscipleTools/disciple-tools-network-dashboard/releases/latest/download/disciple-tools-network-dashboard.zip"},
+                    { "slug": "dt-outline-vpn", "url": "https://github.com/cairocoder01/dt-outline-vpn/releases/latest/download/disciple-tools-outline-vpn.zip"},
+                    { "slug": "disciple-tools-setup-wizard", "url": "https://github.com/cairocoder01/dt-setup-wizard/releases/latest/download/disciple-tools-setup-wizard.zip"},
+                    { "slug": "disciple-tools-training", "url": "https://github.com/discipletools/disciple-tools-training/releases/latest/download/disciple-tools-training.zip"}
+                ]
+            }
+        }, {
+            "name": "Wordfence",
+            "description": "Go to [Wordfence Central](https://www.wordfence.com/central) to add this site."
+        }, {
+            "name": "User Setup",
+            "description": "Select the users from the list below that should be included in this site. In addition, add the site admin user that is specific to this site.",
+            "config": {
+                "users": [{
+                    "username": "lastgen2414",
+                    "email": "lastgen2414@test.com",
+                    "roles": ["dt_admin"],
+                    "displayName": "Lauren"
+                }, {
+                    "username": "nomadicpadawan",
+                    "email": "nomadicpadawan@test.com",
+                    "roles": ["dt_admin"],
+                    "displayName": "Amber"
+                }, {
+                    "username": "write",
+                    "email": "writeussoon@test.com",
+                    "roles": ["dt_admin"],
+                    "displayName": "Phil"
+                }, {
+                    "username": "fishingwithnets",
+                    "email": "fishingwithnets@test.com",
+                    "roles": ["dt_admin"],
+                    "displayName": "James"
+                }, {
+                    "username": "mtm.data.team",
+                    "email": "mtm.data.team@test.com",
+                    "roles": ["custom_plugin_admin", "strategist"],
+                    "displayName": "MTM Data Team"
+                }]
+            }
+        }]
+      }');
         ?>
     <!-- Box -->
     <table class="widefat striped">
@@ -134,7 +182,7 @@ class Disciple_Tools_Setup_Wizard_Tab_Settings
       <tbody>
       <tr>
         <td class="overflow-scroll">
-          <pre><code><?php echo json_encode( $sample, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) ?></code></pre>
+        <pre><code><?php echo json_encode( $sample, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) ?></code></pre>
         </td>
       </tr>
       </tbody>
