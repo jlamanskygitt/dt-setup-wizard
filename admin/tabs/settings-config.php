@@ -143,30 +143,30 @@ class Disciple_Tools_Setup_Wizard_Tab_Settings
             "description": "Select the users from the list below that should be included in this site. In addition, add the site admin user that is specific to this site.",
             "config": {
                 "users": [{
-                    "username": "lastgen2414",
-                    "email": "lastgen2414@test.com",
+                    "username": "user1",
+                    "email": "user1@test.com",
                     "roles": ["dt_admin"],
-                    "displayName": "Lauren"
+                    "displayName": "One"
                 }, {
-                    "username": "nomadicpadawan",
-                    "email": "nomadicpadawan@test.com",
+                    "username": "user2",
+                    "email": "user2@test.com",
                     "roles": ["dt_admin"],
-                    "displayName": "Amber"
+                    "displayName": "Two"
                 }, {
-                    "username": "write",
-                    "email": "writeussoon@test.com",
+                    "username": "user3",
+                    "email": "user3@test.com",
                     "roles": ["dt_admin"],
-                    "displayName": "Phil"
+                    "displayName": "Three"
                 }, {
-                    "username": "fishingwithnets",
-                    "email": "fishingwithnets@test.com",
+                    "username": "user4",
+                    "email": "user4@test.com",
                     "roles": ["dt_admin"],
-                    "displayName": "James"
+                    "displayName": "Four"
                 }, {
-                    "username": "mtm.data.team",
-                    "email": "mtm.data.team@test.com",
+                    "username": "user5",
+                    "email": "user5@test.com",
                     "roles": ["custom_plugin_admin", "strategist"],
-                    "displayName": "MTM Data Team"
+                    "displayName": "Five"
                 }]
             }
         }]
