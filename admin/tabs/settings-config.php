@@ -79,7 +79,7 @@ class Disciple_Tools_Setup_Wizard_Tab_Settings
                     "value": " "
                 }, {
                     "key": "admin_email",
-                    "value": "xg-web-admin@xtendglobal.org"
+                    "value": "admin@test.com"
                 }]
             }
         }, {
@@ -107,7 +107,7 @@ class Disciple_Tools_Setup_Wizard_Tab_Settings
             }
         }, {
             "name": "Mapping",
-            "description": "Create a geocoding key at [https://console.cloud.google.com/apis/credentials?project=disciple-tools-geocoding](https://console.cloud.google.com/apis/credentials?project=disciple-tools-geocoding). Key should have permissions for\n\n - Geocoding API\n - Maps Javascript API\n - Places API\n\nEnter the created API Key below.",
+            "description": "Create a geocoding key. Key should have permissions for\n\n - Geocoding API\n - Maps Javascript API\n - Places API\n\nEnter the created API Key below.",
             "config": {
                 "options": [{
                     "key": "x"
