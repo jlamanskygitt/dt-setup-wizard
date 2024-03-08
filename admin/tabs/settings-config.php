@@ -50,9 +50,7 @@ class Disciple_Tools_Setup_Wizard_Tab_Settings
             <td>
               <form name="settingsConfig" onsubmit="settingsConfigSubmit(event)">
                 <label for="config">JSON Config</label>
-
-                <textarea id="config" name="config" class="auto-expand" data-min-rows="3" ><?php echo( $setting );?></textarea>
-
+                <textarea id="config" name="config" class="auto-expand" data-min-rows="3" ><?php echo esc_html( $setting );?></textarea>
                 <button type="submit">Submit</button>
               </form>
             </td>
