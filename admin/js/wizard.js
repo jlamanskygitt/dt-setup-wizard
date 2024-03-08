@@ -165,6 +165,46 @@ function processConfig(config) {
   }
 }
 
+function settingsConfigSubmit(evt) {
+  if (evt) {
+    evt.preventDefault();
+  }
+  const formData = new FormData(evt.target);
+  const configRaw = formData.get('config');
+  if (!configRaw) {
+    console.error('Config value is required');
+    showMessage('Config value is required', 'error');
+    return;
+  }
+
+  try {
+    const config = JSON.parse(configRaw);
+    saveConfig(configRaw);
+  } catch (error) {
+    console.error(error);
+    showMessage('Could not parse config JSON', 'error');
+  }
+}
+
+function saveConfig(config) {
+  var option = {
+          "key": "dt_setup_wizard_config",
+          "value": config
+      }
+
+  console.log('saving settings: ', config);
+  showMessage(`Setting option: ${option.key}`);
+  sendApiRequest('/option', option, 'disciple-tools-setup-wizard/v1')
+    .then((data) => {
+      console.log('Set option', data);
+      showMessage(`Set option: ${option.key}`, 'success');
+    })
+    .catch((error) => {
+      console.error('Error setting option', error);
+      showMessage(`Error setting option: ${option.key}`, 'error');
+    });
+}
+
 function createMessageLi(content, context) {
   const message = document.createElement('li');
   message.innerHTML = content;

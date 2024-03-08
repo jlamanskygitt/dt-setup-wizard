@@ -55,18 +55,17 @@ function disciple_tools_setup_wizard() {
     }
 
     return Disciple_Tools_Setup_Wizard::instance();
-
 }
 add_action( 'after_setup_theme', 'disciple_tools_setup_wizard', 20 );
 
 //register the D.T Plugin
-add_filter( 'dt_plugins', function ( $plugins ){
-    $plugin_data = get_file_data( __FILE__, [ 'Version' => 'Version', 'Plugin Name' => 'Plugin Name' ], false );
-    $plugins['disciple-tools-setup-wizard'] = [
+add_filter( 'dt_plugins', function ( $plugins ) {
+    $plugin_data = get_file_data( __FILE__, array( 'Version' => 'Version', 'Plugin Name' => 'Plugin Name' ), false );
+    $plugins['disciple-tools-setup-wizard'] = array(
         'plugin_url' => trailingslashit( plugin_dir_url( __FILE__ ) ),
         'version' => $plugin_data['Version'] ?? null,
         'name' => $plugin_data['Plugin Name'] ?? null,
-    ];
+    );
     return $plugins;
 });
 
@@ -89,20 +88,19 @@ class Disciple_Tools_Setup_Wizard {
     private function __construct() {
         $is_rest = dt_is_rest();
         if ( $is_rest && strpos( dt_get_url_path(), 'disciple-tools-setup-wizard' ) !== false ) {
-            require_once( 'rest-api/rest-api.php' ); // adds starter rest api class
+            require_once 'rest-api/rest-api.php'; // adds starter rest api class
         }
 
         if ( is_admin() ) {
-            require_once( 'admin/admin-menu-and-tabs.php' ); // adds starter admin page and section for plugin
+            require_once 'admin/admin-menu-and-tabs.php'; // adds starter admin page and section for plugin
         }
 
         $this->i18n();
 
         add_filter( 'allowed_wp_v2_paths', function ( $paths ) {
-            array_push( $paths, '/wp/v2/plugins');
+            array_push( $paths, '/wp/v2/plugins' );
             return $paths;
         } );
-
     }
 
     /**
@@ -191,8 +189,8 @@ class Disciple_Tools_Setup_Wizard {
 
 
 // Register activation hook.
-register_activation_hook( __FILE__, [ 'Disciple_Tools_Setup_Wizard', 'activation' ] );
-register_deactivation_hook( __FILE__, [ 'Disciple_Tools_Setup_Wizard', 'deactivation' ] );
+register_activation_hook( __FILE__, array( 'Disciple_Tools_Setup_Wizard', 'activation' ) );
+register_deactivation_hook( __FILE__, array( 'Disciple_Tools_Setup_Wizard', 'deactivation' ) );
 
 
 if ( ! function_exists( 'disciple_tools_setup_wizard_hook_admin_notice' ) ) {
@@ -254,7 +252,7 @@ add_action( 'plugins_loaded', function () {
         // Check for plugin updates
         if ( !class_exists( 'Puc_v4_Factory' ) ) {
             if ( file_exists( get_template_directory() . '/dt-core/libraries/plugin-update-checker/plugin-update-checker.php' ) ) {
-                require( get_template_directory() . '/dt-core/libraries/plugin-update-checker/plugin-update-checker.php' );
+                require get_template_directory() . '/dt-core/libraries/plugin-update-checker/plugin-update-checker.php';
             }
         }
         if ( class_exists( 'Puc_v4_Factory' ) ) {

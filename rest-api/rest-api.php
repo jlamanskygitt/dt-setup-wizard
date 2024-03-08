@@ -3,24 +3,24 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 class Disciple_Tools_Setup_Wizard_Endpoints
 {
-    public $permissions = [ 'manage_dt' ];
+    public $permissions = array( 'manage_dt' );
 
     public function add_api_routes() {
         $namespace = 'disciple-tools-setup-wizard/v1';
 
-        $this->register_route( $namespace, '/user', [ $this, 'user_create' ] );
-        $this->register_route( $namespace, '/option', [ $this, 'option_set' ] );
+        $this->register_route( $namespace, '/user', array( $this, 'user_create' ) );
+        $this->register_route( $namespace, '/option', array( $this, 'option_set' ) );
     }
 
     public function register_route( $namespace, $route, $callback ) {
         register_rest_route(
-            $namespace, $route, [
+            $namespace, $route, array(
                 'methods'  => WP_REST_Server::CREATABLE,
                 'callback' => $callback,
-                'permission_callback' => function( WP_REST_Request $request ) {
+                'permission_callback' => function ( WP_REST_Request $request ) {
                     return $this->has_permission();
                 },
-            ]
+            )
         );
     }
 
@@ -38,7 +38,7 @@ class Disciple_Tools_Setup_Wizard_Endpoints
                 $user['locale'] ?? null,
                 false,
                 $user['password'] ?? null,
-                $user['optionalFields'] ?? [],
+                $user['optionalFields'] ?? array(),
                 false
             );
         } catch ( Exception $ex ) {
@@ -81,7 +81,7 @@ class Disciple_Tools_Setup_Wizard_Endpoints
         return self::$_instance;
     } // End instance()
     public function __construct() {
-        add_action( 'rest_api_init', [ $this, 'add_api_routes' ] );
+        add_action( 'rest_api_init', array( $this, 'add_api_routes' ) );
     }
     public function has_permission(){
         $pass = false;
