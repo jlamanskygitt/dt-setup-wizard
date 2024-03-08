@@ -33,12 +33,12 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
 //
  */
 
-add_action( 'tgmpa_register', function() {
+add_action( 'tgmpa_register', function () {
     /*
      * Array of plugin arrays. Required keys are name and slug.
      * If the source is NOT from the .org repo, then source is also required.
      */
-    $plugins = [];
+    $plugins = array();
     // a wordpress plugin:
     //    $plugins[] = [
     //            'name'                  => 'iThemes Security',

@@ -61,40 +61,40 @@ class Disciple_Tools_Setup_Wizard_Tab_Advanced
     }
 
     public function right_column() {
-        $sample = [
-            'plugins' => [
+        $sample = array(
+            'plugins' => array(
                 'https://github.com/DiscipleTools/disciple-tools-webform/releases/latest/download/disciple-tools-webform.zip',
-                'https://github.com/DiscipleTools/disciple-tools-mobile-app-plugin/releases/latest/download/disciple-tools-mobile-app-plugin.zip'
-            ],
-            'users' => [
-                [
+                'https://github.com/DiscipleTools/disciple-tools-mobile-app-plugin/releases/latest/download/disciple-tools-mobile-app-plugin.zip',
+            ),
+            'users' => array(
+                array(
                     'username' => 'testuser',
                     'email' => 'test@test.com',
-                    'roles' => [
+                    'roles' => array(
                         'multiplier',
-                        'partner'
-                    ],
-                    'displayName' => 'John Doe'
-                ]
-            ],
-            'options' => [
-                [
+                        'partner',
+                    ),
+                    'displayName' => 'John Doe',
+                ),
+            ),
+            'options' => array(
+                array(
                     'key' => 'blogname',
-                    'value' => 'My DT site'
-                ],
-                [
+                    'value' => 'My DT site',
+                ),
+                array(
                     'key' => 'dt_field_customizations',
-                    'value' => [
-                        'contacts' => [
-                            'coached_by' => [
+                    'value' => array(
+                        'contacts' => array(
+                            'coached_by' => array(
                                 'name' => 'Discipled by',
-                            ]
-                        ]
-                    ],
-                    'overwrite' => true
-                ]
-            ]
-        ];
+                            ),
+                        ),
+                    ),
+                    'overwrite' => true,
+                ),
+            ),
+        );
         ?>
     <!-- Box -->
     <table class="widefat striped">
