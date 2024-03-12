@@ -1,9 +1,9 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
 
-function isJson($string) {
-  json_decode($string);
-  return json_last_error() === JSON_ERROR_NONE;
+function is_json( $string ) {
+    json_decode( $string );
+    return json_last_error() === JSON_ERROR_NONE;
 }
 
 /**
@@ -12,18 +12,18 @@ function isJson($string) {
 class Disciple_Tools_Setup_Wizard_Tab
 {
     public function content() {
-      $setting = get_option( 'dt_setup_wizard_config' );
-      
-      if (!isJson($setting) || empty($setting)) {
-        ?>
+        $setting = get_option( 'dt_setup_wizard_config' );
+
+        if ( !is_json( $setting ) || empty( $setting ) ) {
+            ?>
           <div>
             Setup Wizard has not been configured. Please enter a JSON config option on the Settings tab
             <a href='admin.php?page=disciple_tools_setup_wizard&tab=settings'>here</a>.
           </div>
-        <?php
-      }
-      else{
-        ?>
+            <?php
+        }
+        else {
+            ?>
         <div class="wrap tab-advanced">
           <div id="poststuff">
             <div id="post-body" class="metabox-holder columns-2">
@@ -37,7 +37,7 @@ class Disciple_Tools_Setup_Wizard_Tab
               <div id="postbox-container-1" class="postbox-container">
                 <!-- Right Column -->
 
-                <?php $this->right_column($setting) ?>
+                <?php $this->right_column( $setting ) ?>
 
                 <!-- End Right Column -->
               </div><!-- postbox-container 1 -->
@@ -46,38 +46,38 @@ class Disciple_Tools_Setup_Wizard_Tab
             </div><!-- post-body meta box container -->
           </div><!--poststuff end -->
         </div><!-- wrap end -->
-        <?php
-      }
+            <?php
+        }
     }
 
     public function main_column() {
-      $Parsedown = new Parsedown();
-      
+        $parsedown = new Parsedown();
+
         if ( isset( $_GET['step'] ) ) {
-          $step = sanitize_key( wp_unslash( $_GET['step'] ) );
+            $step = sanitize_key( wp_unslash( $_GET['step'] ) );
         } else {
-          $step = '1';
+            $step = '1';
         }
 
         $setting = get_option( 'dt_setup_wizard_config' );
-        $config = json_decode($setting);
+        $config = json_decode( $setting );
         ?>
         <!-- Box -->
         <?php //foreach($config->steps as $key=>$item)
                   //{
                     //$key++;
-                    ?>
+        ?>
 
         <table class="widefat striped">
           <thead>
           <tr>
-            <th><?php echo $config->steps[$step-1]->name?></th>
+            <th><?php echo $config->steps[$step -1]->name?></th>
           </tr>
           </thead>
           <tbody>
           <tr>
             <td>
-              <label for="config"><?php echo $Parsedown->text($config->steps[$step-1]->description)?></label>
+              <?php echo $parsedown->text( $config->steps[$step -1]->description )?>
             </td>
           </tr>
           </tbody>
@@ -90,35 +90,34 @@ class Disciple_Tools_Setup_Wizard_Tab
         <?php
     }
 
-    public function right_column($setting) {
-      $config = json_decode($setting);
-      ?>
+    public function right_column( $setting ) {
+        $config = json_decode( $setting );
+        ?>
   <!-- Box -->
     Steps:
 
-    <?php
+        <?php
 
-    //
 
-    $link = 'admin.php?page=disciple_tools_setup_wizard&tab=wizard&step=';
-    ?>
+        $link = 'admin.php?page=disciple_tools_setup_wizard&tab=wizard&step=';
+        ?>
 
     <ol>
-      <?php
-        foreach($config->steps as $key=>$item)
+        <?php
+        foreach ( $config->steps as $key =>$item )
         {
-          $key++;
-          ?>
+            $key++;
+            ?>
                 <li>
                   <a href="<?php echo esc_attr( $link ) . $key ?>"><?php echo $item->name ?></a>
                 </li>
-          <?php
-        } 
-      ?>
+            <?php
+        }
+        ?>
     </ol>
   <br>
   <!-- End Box -->
-      <?php
-  }
+        <?php
+    }
 }
 
