@@ -41,6 +41,8 @@ class Disciple_Tools_Setup_Wizard_Menu {
 
         $this->page_title = __( 'Setup Wizard', 'disciple-tools-setup-wizard' );
 
+        require_once 'tabs/wizard.php';
+
         require_once 'tabs/advanced-config.php';
 
         require_once 'tabs/settings-config.php';
@@ -99,6 +101,8 @@ class Disciple_Tools_Setup_Wizard_Menu {
             <h2><?php echo esc_html( $this->page_title ) ?></h2>
             <?php wp_nonce_field( 'security_headers', 'security_headers_nonce' ); ?>
             <h2 class="nav-tab-wrapper">
+                <a href="<?php echo esc_attr( $link ) . 'wizard' ?>"
+                   class="nav-tab <?php echo esc_html( ( $tab == 'wizard' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">Wizard</a>
                 <a href="<?php echo esc_attr( $link ) . 'advanced' ?>"
                    class="nav-tab <?php echo esc_html( ( $tab == 'advanced' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">Advanced</a>
                 <a href="<?php echo esc_attr( $link ) . 'settings' ?>"
@@ -108,16 +112,16 @@ class Disciple_Tools_Setup_Wizard_Menu {
             <?php
             switch ( $tab ) {
                 case 'general':
+                case 'wizard':
+                    $object = new Disciple_Tools_Setup_Wizard_Tab();
+                    $object->content();
+                    break;
                 case 'advanced' :
                     $object = new Disciple_Tools_Setup_Wizard_Tab_Advanced();
                     $object->content();
                     break;
                 case 'settings':
                     $object = new Disciple_Tools_Setup_Wizard_Tab_Settings();
-                    $object->content();
-                    break;
-                case 'second':
-                    $object = new Disciple_Tools_Setup_Wizard_Tab_Second();
                     $object->content();
                     break;
                 default:
