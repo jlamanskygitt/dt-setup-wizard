@@ -71,13 +71,13 @@ class Disciple_Tools_Setup_Wizard_Tab
         <table class="widefat striped">
           <thead>
           <tr>
-            <th><?php echo $config->steps[$step -1]->name?></th>
+            <th><?php echo esc_html( $config->steps[$step -1]->name )?></th>
           </tr>
           </thead>
           <tbody>
           <tr>
             <td>
-              <?php echo $parsedown->text( $config->steps[$step -1]->description )?>
+              <?php echo wp_kses_post( $parsedown->text( $config->steps[$step -1]->description ) )?>
             </td>
           </tr>
           </tbody>
@@ -109,7 +109,7 @@ class Disciple_Tools_Setup_Wizard_Tab
             $key++;
             ?>
                 <li>
-                  <a href="<?php echo esc_attr( $link ) . $key ?>"><?php echo $item->name ?></a>
+                  <a href="<?php echo esc_attr( $link ) . esc_html( $key ) ?>"><?php echo esc_html( $item->name ) ?></a>
                 </li>
             <?php
         }
